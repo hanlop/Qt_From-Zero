@@ -162,7 +162,7 @@ inline int add(int a, int b) {
 
 **图示:**
 
-![](D:\常用文件夹\Pictures\Screenshots\QQ截图20240706162109.png)
+![](../assets/QQ截图20240706162109.png)
 
 ### 3.2使用内联函数的场景
 

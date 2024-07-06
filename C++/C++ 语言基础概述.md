@@ -162,7 +162,8 @@ inline int add(int a, int b) {
 
 **图示:**
 
-![](../assets/QQ截图20240706162109.png)
+![QQ截图20240706162109](https://github.com/hanlop/Qt_From-Zero/assets/112152150/ce0d44bd-2d11-4f27-8f7b-723bf26716e7)
+
 
 ### 3.2使用内联函数的场景
 

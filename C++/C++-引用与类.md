@@ -547,3 +547,267 @@ Modified values: x = 5, y = 100
 ```
 
 在这个示例中，`getLarger` 函数返回两个整数中较大的那个的引用。在 `main` 函数中，我们通过 `getLarger(x, y) = 100;` 直接将返回的引用赋值为 `100`，从而修改了 `y` 的值。这样的用法可以直接操作函数返回的引用所绑定的对象，而不是对副本的操作。
+
+## 2.类的基本概念
+
+### 2.1面向对象
+
+面向对象编程（OOP）是一种通过模拟现实世界对象来设计和构建软件系统的方法。OOP的思想和原则旨在提高代码的可重用性、可扩展性和可维护性。以下是面向对象编程的核心思想和原则：
+
+**1. 封装（Encapsulation）**
+
+封装是将数据和操作数据的方法结合在一起，并隐藏对象的内部实现细节。通过这种方式，可以保护对象的状态，防止外部代码直接访问和修改内部数据。封装通过访问修饰符（如`private`、`protected`和`public`）来实现。
+
+**2. 继承（Inheritance）**
+
+继承是从现有类（父类或基类）创建新类（子类或派生类）的过程。子类继承父类的属性和方法，可以扩展和修改父类的行为。继承有助于代码的重用和组织。
+
+**3. 多态（Polymorphism）**
+
+多态性允许使用相同的接口调用不同的实现方法。它分为编译时多态（函数重载和运算符重载）和运行时多态（通过虚函数）。多态提高了代码的灵活性和可扩展性。
+
+### 2.2类与对象
+
+在C++中，定义一个类的基本格式如下：
+
+`public` `protected` `private`等关键字我们之后都会学习到
+
+```cpp
+class ClassName {
+public:
+    // 公有成员
+    数据成员;           // 属性或字段
+    成员函数;           // 方法或函数
+
+protected:
+    // 受保护成员
+    数据成员;           // 属性或字段
+    成员函数;           // 方法或函数
+
+private:
+    // 私有成员
+    数据成员;           // 属性或字段
+    成员函数;           // 方法或函数
+};
+```
+
+**类（Class）**
+
+类是一个模版，用来定义一类对象的属性和行为。你可以把类看作是对某种类型事物的描述。
+
+**定义一个类：**
+
+```cpp
+class Fruit {
+public:
+    char name[20];    // 属性：水果的名字
+    char color[10];   // 属性：水果的颜色
+
+    void display() {  // 行为：显示水果的信息
+        std::cout << "Fruit: " << name << ", Color: " << color << std::endl;
+    }
+};
+```
+
+在上面的例子中，`Fruit` 类定义了两个属性 `name` 和 `color`，以及一个行为 `display`。
+
+**对象（Object）**
+
+对象是类的实例化。通过类的定义，我们可以创建对象，每个对象都有独立的属性，但共享相同的方法。
+
+**创建和使用对象(使用对象和C语言中的结构体使用大致相同)：**
+
+```cpp
+int main() {
+    Fruit apple;        // 创建对象apple
+    strcpy(apple.name, "Apple"); // 设置对象的属性
+    strcpy(apple.color, "Red");
+    apple.display();    // 调用对象的方法
+
+    Fruit banana;       // 创建对象banana
+    strcpy(banana.name, "Banana");
+    strcpy(banana.color, "Yellow");
+    banana.display();
+
+    return 0;
+}
+```
+
+在上面的代码中，我们创建了两个 `Fruit` 对象：`apple` 和 `banana`。我们为每个对象设置了不同的属性值，并调用了 `display` 方法来显示它们的信息。
+
+**类与对象的关系**
+
+- **类是模板**：类定义了对象的结构和行为，但本身不占用内存。
+- **对象是类的实例**：对象是类的具体实现，通过类的定义创建，占用内存。
+
+### 2.3访问修饰符
+
+如果你是零基础,无需管友元函数以及派生类相关知识点,后面我们回讲解相关知识点,零基础的只需要知道
+
+|          | public                       | private                        | protected                      |
+| -------- | ---------------------------- | ------------------------------ | ------------------------------ |
+| 类外函数 | 可以使用该访问修饰符下的成员 | 可以使用该访问修饰符下的成员   | 可以使用该访问修饰符下的成员   |
+| 类内函数 | 可以使用该访问修饰符下的成员 | 不可以使用该访问修饰符下的成员 | 不可以使用该访问修饰符下的成员 |
+
+#### 1. `private`
+
+- **私有成员**只能被类的成员函数和友元函数以及友元类访问，不能被类的外部代码或派生类访问。
+- 通常用于隐藏类的内部实现细节，保护数据不被外部代码直接修改。
+
+**示例：**
+
+```cpp
+class Example {
+private:
+    int privateData;  // 私有数据成员
+
+public:
+    void setPrivateData(int value) {
+        privateData = value;  // 通过公有成员函数修改私有数据
+    }
+
+    int getPrivateData() {
+        return privateData;   // 通过公有成员函数访问私有数据
+    }
+};
+
+int main() {
+    Example ex;
+    ex.setPrivateData(10);    // 通过公有成员函数修改私有数据
+    std::cout << ex.getPrivateData() << std::endl;  // 通过公有成员函数访问私有数据
+    // ex.privateData = 20;  // 错误：不能直接访问私有数据
+    return 0;
+}
+```
+
+#### **2. `protected`**
+
+- **受保护成员**可以被类的成员函数、友元函数和派生类访问，但不能被类的外部代码访问。
+- 通常用于类的继承，允许派生类访问基类的受保护成员。
+
+**示例：**
+
+```cpp
+class Base {
+protected:
+    int protectedData;  // 受保护数据成员
+
+public:
+    void setProtectedData(int value) {
+        protectedData = value;
+    }
+};
+
+class Derived : public Base {
+public:
+    void showProtectedData() {
+        std::cout << protectedData << std::endl;  // 派生类可以访问基类的受保护数据
+    }
+};
+
+int main() {
+    Derived d;
+    d.setProtectedData(10);
+    d.showProtectedData();
+    // d.protectedData = 20;  // 错误：不能直接访问受保护数据
+    return 0;
+}
+```
+
+#### 3. `public`
+
+- **公有成员**可以被任何代码访问，包括类的成员函数、友元函数、派生类和类的外部代码。
+- 通常用于定义类的接口，提供给外部代码调用。
+
+**示例：**
+
+```cpp
+class Example {
+public:
+    int publicData;  // 公有数据成员
+
+    void setPublicData(int value) {
+        publicData = value;
+    }
+
+    int getPublicData() {
+        return publicData;
+    }
+};
+
+int main() {
+    Example ex;
+    ex.publicData = 10;   // 可以直接访问公有数据
+    std::cout << ex.publicData << std::endl;
+    return 0;
+}
+```
+
+**总结**
+
+- **`private`**：私有成员只能被类的成员函数和友元函数访问。用于隐藏实现细节和保护数据。
+- **`protected`**：受保护成员可以被类的成员函数、友元函数和派生类访问。用于类的继承。
+- **`public`**：公有成员可以被任何代码访问。用于定义类的接口。
+
+### 2.4在类体外定义成员函数
+
+1. **在类声明中声明成员函数**：在类的定义中声明成员函数，但不提供函数体。
+2. **在类体外定义成员函数**：在类体外实现这些成员函数，使用作用域运算符 `::` 指定函数所属的类。
+
+**定义的格式:**
+
+`<type> <class_name>::<func_name>(<参数表>){}`
+
+**示例**
+
+**头文件（`Example.h`）**
+
+在头文件中声明类和成员函数：
+
+```cpp
+#ifndef EXAMPLE_H
+#define EXAMPLE_H
+
+#include <iostream>
+
+class Example {
+private:
+    int data;
+
+public:
+    Example(int value);      // 构造函数的声明
+    void display() const;    // 成员函数的声明
+};
+
+#endif
+```
+
+**源文件（`Example.cpp`）**
+
+在源文件中定义成员函数：
+
+```cpp
+#include "Example.h"
+
+// 构造函数的定义
+Example::Example(int value) : data(value) {}
+
+// 成员函数的定义
+void Example::display() const {
+    std::cout << "Data: " << data << std::endl;
+}
+```
+
+**主程序文件（`main.cpp`）**
+
+在主程序文件中使用类：
+
+```cpp
+#include "Example.h"
+
+int main() {
+    Example ex(10);  // 创建对象并调用构造函数
+    ex.display();    // 调用成员函数
+    return 0;
+}
+```
